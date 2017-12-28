@@ -14,3 +14,5 @@ libraryDependencies ++= Seq(
 
 //test in assembly := {}
 //mainClass in assembly := Some("org.example.scala.MainObject")
+
+enablePlugins(JmhPlugin)
