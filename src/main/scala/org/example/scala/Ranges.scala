@@ -17,7 +17,7 @@ case class Ranges() {
     * Sort a sequence of Range by each Range.min
     * @return Option[Range]
     */
-  def sorted : Seq[Range] = vals.toSeq.sortWith(_.start <= _.start)
+  def sorted : Seq[Range] = vals.toSeq.sortWith(_.start < _.start)
 
   /**
     * Append a Range
