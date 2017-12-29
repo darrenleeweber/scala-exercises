@@ -128,6 +128,23 @@ sbt
 > jmh:run -i 20 -wi 10 -f1 -t1
 ```
 
+Example bechmarks on `Intervals` with random arrays of integer inputs, indicating
+the `Intervals.sorted` and `Intervals.skipped` methods run in `O(n)` time:
+```
+[info] # Run complete. Total time: 00:03:04
+[info] Benchmark                   Mode  Cnt    Score   Error   Units
+
+[info] BenchIntervals.sorted10     thrpt   20  819.741 ± 30.190  ops/ms
+[info] BenchIntervals.sorted100    thrpt   20   62.362 ±  2.345  ops/ms
+[info] BenchIntervals.sorted1000   thrpt   20    5.057 ±  0.130  ops/ms
+
+[info] BenchIntervals.skipped10    thrpt   20  591.115 ± 26.271  ops/ms
+[info] BenchIntervals.skipped100   thrpt   20   58.320 ±  1.734  ops/ms
+[info] BenchIntervals.skipped1000  thrpt   20    4.699 ±  0.201  ops/ms
+
+[success] Total time: 197 s, completed Dec 28, 2017 8:17:14 PM
+```
+
 Benchmark references:
 - http://tutorials.jenkov.com/java-performance/jmh.html
 - https://github.com/ktoso/sbt-jmh
