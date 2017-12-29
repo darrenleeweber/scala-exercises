@@ -15,7 +15,7 @@ case class Intervals() {
     * Sort a sequence of Interval by each Interval.start
     * @return Option[Interval]
     */
-  def sorted : Seq[Interval] = vals.toSeq.sortWith(_.start <= _.start)
+  def sorted : Seq[Interval] = vals.toSeq.sortWith(_.start < _.start)
 
   /**
     * Append an Interval
