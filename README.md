@@ -114,35 +114,36 @@ org.example.scala.Intervals.sorted(Intervals.scala:18)
 
 #### Benchmarks
 
-The benchmarks are kept in a `benchmarks` branch, to separate the code from
-the main package.  The branch needs to be kept up to date with master, as
-required.
-
-To run benchmarks:
+To run benchmarks in sbt:
 
 ```
-git checkout benchmarks
-sbt
-> test
-> jmh:clean
-> jmh:run -i 20 -wi 10 -f1 -t1
+jmh:clean
+jmh:run -i 20 -wi 10 -f1 -t1
 ```
 
-Example bechmarks on `Intervals` with random arrays of integer inputs, indicating
-the `Intervals.sorted` and `Intervals.skipped` methods run in `O(n)` time:
+Example benchmarks on `Intervals` and `Ranges` with random arrays of integer inputs, indicating
+the `sorted` and `skipped` methods run in an `O(log-n)` time.  The `n` is the
+number of intervals, not the number of integers in the entire range covered by
+all the intervals.  The initial append operation is contant time for each of the n intervals, so
+that's `O(n)` append ops, the sort should be whatever java `Array.sort` can do with integer values,
+and the final pair-wise skip comparisons should be a little less than `O(n)`.  All together, it's
+a little under an `O(n^2)` with minimal use of memory:
 ```
-[info] # Run complete. Total time: 00:03:04
-[info] Benchmark                   Mode  Cnt    Score   Error   Units
+[info] # Run complete. Total time: 00:06:08
+[info] Benchmark                    Mode  Cnt    Score    Error   Units
+[info] BenchIntervals.skipped100   thrpt   20   57.537 ±  1.946  ops/ms
+[info] BenchIntervals.skipped200   thrpt   20   27.853 ±  1.222  ops/ms
+[info] BenchIntervals.skipped400   thrpt   20   11.140 ±  2.223  ops/ms
+[info] BenchIntervals.skipped600   thrpt   20    8.443 ±  0.297  ops/ms
+[info] BenchIntervals.skipped800   thrpt   20    6.259 ±  0.176  ops/ms
+[info] BenchIntervals.skipped1000  thrpt   20    4.937 ±  0.175  ops/ms
 
-[info] BenchIntervals.sorted10     thrpt   20  819.741 ± 30.190  ops/ms
-[info] BenchIntervals.sorted100    thrpt   20   62.362 ±  2.345  ops/ms
-[info] BenchIntervals.sorted1000   thrpt   20    5.057 ±  0.130  ops/ms
-
-[info] BenchIntervals.skipped10    thrpt   20  591.115 ± 26.271  ops/ms
-[info] BenchIntervals.skipped100   thrpt   20   58.320 ±  1.734  ops/ms
-[info] BenchIntervals.skipped1000  thrpt   20    4.699 ±  0.201  ops/ms
-
-[success] Total time: 197 s, completed Dec 28, 2017 8:17:14 PM
+[info] BenchRanges.sorted10        thrpt   20  557.628 ± 71.841  ops/ms
+[info] BenchRanges.sorted100       thrpt   20   45.989 ±  7.584  ops/ms
+[info] BenchRanges.sorted1000      thrpt   20    4.107 ±  0.136  ops/ms
+[info] BenchRanges.skipped10       thrpt   20  448.220 ± 44.504  ops/ms
+[info] BenchRanges.skipped100      thrpt   20   40.788 ±  6.041  ops/ms
+[info] BenchRanges.skipped1000     thrpt   20    3.894 ±  0.425  ops/ms
 ```
 
 Benchmark references:
