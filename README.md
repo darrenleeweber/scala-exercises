@@ -80,10 +80,10 @@ append operations are `O(1)` for a `ListBuffer` [1].  The `Interval`
 class implements an inclusive interval, i.e. [a,b]; the scala library
 `Range` class implements an open ended interval, i.e. [a,b).  The sequence
 of intervals are sorted by increasing values of the interval start (a
-default scala sort algorithm is used.)  It then identifies
-skipped intervals by mapping every second pair of that sorted
-sequence into a new sequence of `Interval` or `Range`.  The details
-of what constitutes a skipped interval depend on the assumption about
+default scala sort algorithm is used, which calls java Array.sort, [2]).
+It then identifies skipped intervals by mapping every second pair of that sorted
+sequence into a new sequence of `Interval` or `Range`.  The details of what
+constitutes a skipped interval depend on the assumption about
 the interval (closed or open ended); see the `Intervals` and `Ranges`
 classes for those details.
 
@@ -99,3 +99,35 @@ option.
 
 [1] http://docs.scala-lang.org/overviews/collections/performance-characteristics.html
 
+[2] A call stack for Intervals.sorted:
+
+```
+java.util.Arrays.sort(Arrays.java:1438)
+scala.collection.SeqLike.sorted(SeqLike.scala:652)
+scala.collection.SeqLike.sorted$(SeqLike.scala:640)
+scala.collection.AbstractSeq.sorted(Seq.scala:41)
+scala.collection.SeqLike.sortWith(SeqLike.scala:605)
+scala.collection.SeqLike.sortWith$(SeqLike.scala:605)
+scala.collection.AbstractSeq.sortWith(Seq.scala:41)
+org.example.scala.Intervals.sorted(Intervals.scala:18)
+```
+
+#### Benchmarks
+
+The benchmarks are kept in a `benchmarks` branch, to separate the code from
+the main package.  The branch needs to be kept up to date with master, as
+required.
+
+To run benchmarks:
+
+```
+git checkout benchmarks
+sbt
+> test
+> jmh:clean
+> jmh:run -i 20 -wi 10 -f1 -t1
+```
+
+Benchmark references:
+- http://tutorials.jenkov.com/java-performance/jmh.html
+- https://github.com/ktoso/sbt-jmh
