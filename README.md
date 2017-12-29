@@ -74,23 +74,23 @@ sequence of real integers.  However, the sequence of intervals:
 
 #### Implementation Notes
 
-The solutions implemented in `Intervals` and `Ranges` accumulate intervals into
-a `ListBuffer` of a new class for `Interval`; the append operations are `O(1)`
-for a `ListBuffer` [1].  The `Interval` class implements an inclusive interval,
-i.e. [a,b]; the scala library `Range` class implements an open ended interval,
-i.e. [a,b).  The sequence of intervals are sorted by increasing values of the
-interval start (a default scala sort algorithm is used, which calls java
-Array.sort, [2]).  It then identifies skipped intervals by mapping every second
-pair of that sorted sequence into a new sequence of `Interval` or `Range`.  The
+A faster alternative is possible, using binary trees that are more efficient
+at building and querying the intervals, see:
+- https://en.wikipedia.org/wiki/Interval_tree
+
+The solutions implemented in `Intervals` and `Ranges` accumulate all the
+intervals into a `ListBuffer` (the append operations are `O(1)` [1]).  The
+`Interval` class implements an inclusive interval, i.e. [a,b]; the scala library
+`Range` class implements an open ended interval, i.e. [a,b).  The entire
+sequence of intervals are sorted by increasing values of the interval start (a
+default scala sort algorithm is used, which calls java Array.sort [2]).  It then
+identifies skipped intervals by collecting every second pair of the sorted
+sequence if there is any gap between them, the new sequence is the gaps.  The
 details of what constitutes a skipped interval depend on the assumption about
 the interval (closed or open ended); see the `Intervals` and `Ranges` classes
 for those details.
 
-Faster alternatives are possible, using binary trees that are more efficient
-at building and querying the intervals, see:
-- https://en.wikipedia.org/wiki/Interval_tree
-
-A brute-force solution could use the min and max of all the intervals to
+Another brute-force solution could use the min and max of all the intervals to
 construct a set of all the values in that range (or a sparse array).  It could
 also compose a set of all the values in the intervals (also a sparse array).
 The difference in those sets is the intervals that are skipped.  Any
@@ -124,13 +124,14 @@ jmh:clean
 jmh:run -i 20 -wi 10 -f1 -t1
 ```
 
-Example benchmarks on `Intervals` and `Ranges` with random arrays of integer inputs, indicating
-the `sorted` and `skipped` methods run in an `O(log-n)` time.  The `n` is the
-number of intervals, not the number of integers in the entire range covered by
-all the intervals.  The initial append operation is contant time for each of the n intervals, so
-that's `O(n)` append ops, the sort should be whatever java `Array.sort` can do with integer values,
-and the final pair-wise skip comparisons should be a little less than `O(n)`.  All together, it's
-a little under an `O(n^2)` with minimal use of memory:
+Example benchmarks on `Intervals` and `Ranges` with random arrays of integer
+inputs.  The `n` is the number of intervals (not  the entire range of real
+integers covered by all the intervals).  The initial append operation is
+constant time for each of the n intervals, so that's `O(n)` append ops; the sort
+is whatever java `Array.sort` does (in java-8), and the final pair-wise skip
+comparisons are a little less than `O(n)`.  All together, it's a little under an
+`O(n^2)` with minimal use of memory:
+
 ```
 [info] # Run complete. Total time: 00:06:08
 [info] Benchmark                    Mode  Cnt    Score    Error   Units
