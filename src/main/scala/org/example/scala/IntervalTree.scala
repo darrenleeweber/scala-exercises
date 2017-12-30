@@ -1,6 +1,6 @@
 package org.example.scala
 
-case class IntervalTree() {
+case class IntervalTree() extends IntervalCollection[Interval] {
   // the TreeMap is ordered by the key natural ordering
   private val tree: collection.mutable.TreeMap[Int,Int] = new collection.mutable.TreeMap[Int,Int]
 
@@ -8,7 +8,7 @@ case class IntervalTree() {
     * Build a sequence of skipped Interval
     * @return Seq[Interval]
     */
-  def skipped : Seq[Interval] = {
+  override def skipped : Seq[Interval] = {
     sorted.sliding(2).collect { skippedInterval }.toSeq
   }
 
@@ -16,16 +16,14 @@ case class IntervalTree() {
     * A sequence of intervals sorted by start
     * @return Seq[(Int,Int)]
     */
-  def sorted : Seq[Interval] = tree.map(new Interval(_)).toSeq
-
-//  def sorted : Seq[Interval] = tree.map(tuple => Interval(tuple._1, tuple._2))
+  override def sorted : Seq[Interval] = tree.map(new Interval(_)).toSeq
 
   /**
     * Insert an Interval into the tree
     * - the TreeMap is sorted by Interval.start
     * @param value Interval
     */
-  def update(value: Interval) : Unit = {
+  override def update(value: Interval) : Unit = {
     tree += (value.start -> value.end)
   }
 

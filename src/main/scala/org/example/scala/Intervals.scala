@@ -1,13 +1,13 @@
 package org.example.scala
 
-case class Intervals() {
+case class Intervals() extends IntervalCollection[Interval] {
   private val vals = new collection.mutable.ListBuffer[Interval]
 
   /**
     * Build a sequence of skipped Interval
     * @return Seq[Interval]
     */
-  def skipped : Seq[Interval] = {
+  override def skipped : Seq[Interval] = {
     sorted.sliding(2).collect { skippedInterval }.toSeq
   }
 
@@ -15,13 +15,13 @@ case class Intervals() {
     * Sort a sequence of Interval by each Interval.start
     * @return Option[Interval]
     */
-  def sorted : Seq[Interval] = vals.toSeq.sortWith(_.start < _.start)
+  override def sorted : Seq[Interval] = vals.toSeq.sortWith(_.start < _.start)
 
   /**
     * Append an Interval
     * @param value Interval
     */
-  def update(value:Interval) : Unit = {
+  override def update(value:Interval) : Unit = {
     vals += value
   }
 
