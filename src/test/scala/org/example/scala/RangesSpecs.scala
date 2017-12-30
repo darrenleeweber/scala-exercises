@@ -2,21 +2,12 @@ package org.example.scala
 
 class RangesSpecs extends SpecHelper {
 
-  def stream : List[(Int, Int)] = {
-    List[(Int, Int)](
-      (2, 6),
-      (9, 12),
-      (8, 9),
-      (18, 21),
-      (4, 7),
-      (10, 11)
-    )
-  }
+  val fixtures = new IntervalStreamFixture()
 
   def ranges : Ranges = {
     val ranges = Ranges()
-    for(tuple <- stream) {
-      ranges.update(Range(tuple._1, tuple._2))
+    for(range <- fixtures.ranges) {
+      ranges.update(range)
     }
     ranges
   }
