@@ -9,6 +9,15 @@ package org.example.scala
 case class Interval(start:Int, end:Int) {
 
   /**
+    *
+    * @param tuple: (Int, Int)
+    * @return Interval
+    */
+  def this(tuple: (Int, Int)) = {
+    this(tuple._1, tuple._2)
+  }
+
+  /**
     * start <= x <= end
     * @return boolean
     */
