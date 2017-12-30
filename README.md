@@ -74,8 +74,8 @@ sequence of real integers.  However, the sequence of intervals:
 
 #### Implementation Notes
 
-A faster alternative is possible, using binary trees that are more efficient
-at building and querying the intervals, see:
+A faster alternative is possible, using binary trees that are more efficient at
+building and querying the intervals, see benchmarks below and algorithm tips at:
 - https://en.wikipedia.org/wiki/Interval_tree
 
 The solutions implemented in `Intervals` and `Ranges` accumulate all the
@@ -133,21 +133,24 @@ comparisons are a little less than `O(n)`.  All together, it's a little under an
 `O(n^2)` with minimal use of memory:
 
 ```
-[info] # Run complete. Total time: 00:06:08
-[info] Benchmark                    Mode  Cnt    Score    Error   Units
-[info] BenchIntervals.skipped100   thrpt   20   57.537 ±  1.946  ops/ms
-[info] BenchIntervals.skipped200   thrpt   20   27.853 ±  1.222  ops/ms
-[info] BenchIntervals.skipped400   thrpt   20   11.140 ±  2.223  ops/ms
-[info] BenchIntervals.skipped600   thrpt   20    8.443 ±  0.297  ops/ms
-[info] BenchIntervals.skipped800   thrpt   20    6.259 ±  0.176  ops/ms
-[info] BenchIntervals.skipped1000  thrpt   20    4.937 ±  0.175  ops/ms
+[info] Benchmark                      Mode  Cnt   Score   Error   Units
+[info] BenchIntervalTree.skipped100  thrpt   20  18.639 ± 0.395  ops/ms
+[info] BenchIntervalTree.skipped300  thrpt   20   7.230 ± 0.253  ops/ms
+[info] BenchIntervalTree.skipped500  thrpt   20   4.564 ± 0.173  ops/ms
+[info] BenchIntervalTree.skipped700  thrpt   20   3.339 ± 0.094  ops/ms
+[info] BenchIntervalTree.skipped900  thrpt   20   2.813 ± 0.088  ops/ms
 
-[info] BenchRanges.sorted10        thrpt   20  557.628 ± 71.841  ops/ms
-[info] BenchRanges.sorted100       thrpt   20   45.989 ±  7.584  ops/ms
-[info] BenchRanges.sorted1000      thrpt   20    4.107 ±  0.136  ops/ms
-[info] BenchRanges.skipped10       thrpt   20  448.220 ± 44.504  ops/ms
-[info] BenchRanges.skipped100      thrpt   20   40.788 ±  6.041  ops/ms
-[info] BenchRanges.skipped1000     thrpt   20    3.894 ±  0.425  ops/ms
+[info] BenchIntervals.skipped100     thrpt   20  17.343 ± 0.668  ops/ms
+[info] BenchIntervals.skipped300     thrpt   20   5.672 ± 0.895  ops/ms
+[info] BenchIntervals.skipped500     thrpt   20   3.566 ± 0.265  ops/ms
+[info] BenchIntervals.skipped700     thrpt   20   2.315 ± 0.292  ops/ms
+[info] BenchIntervals.skipped900     thrpt   20   1.678 ± 0.090  ops/ms
+
+[info] BenchRanges.skipped100        thrpt   20  15.690 ± 0.977  ops/ms
+[info] BenchRanges.skipped300        thrpt   20   6.238 ± 0.216  ops/ms
+[info] BenchRanges.skipped500        thrpt   20   3.123 ± 0.114  ops/ms
+[info] BenchRanges.skipped700        thrpt   20   2.398 ± 0.070  ops/ms
+[info] BenchRanges.skipped900        thrpt   20   1.994 ± 0.046  ops/ms
 ```
 
 Benchmark references:

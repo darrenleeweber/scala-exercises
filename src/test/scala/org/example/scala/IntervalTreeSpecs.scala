@@ -1,11 +1,11 @@
 package org.example.scala
 
-class IntervalsSpecs extends SpecHelper {
+class IntervalTreeSpecs extends SpecHelper {
 
   val fixtures = new IntervalStreamFixture()
 
-  def intervals : Intervals = {
-    val intervals = Intervals()
+  def intervals : IntervalTree = {
+    val intervals = IntervalTree()
     for(interval <- fixtures.intervals) {
       intervals.update(interval)
     }

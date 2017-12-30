@@ -2,14 +2,14 @@ package org.example.scala
 
 import collection.immutable.Range
 
-case class Ranges() {
+case class Ranges()  extends IntervalCollection[Range] {
   val vals = new collection.mutable.ListBuffer[Range]
 
   /**
     * Build a sequence of skipped Range
     * @return Seq[Range]
     */
-  def skipped : Seq[Range] = {
+  override def skipped : Seq[Range] = {
     sorted.sliding(2).collect { skippedInterval }.toSeq
   }
 
@@ -17,13 +17,13 @@ case class Ranges() {
     * Sort a sequence of Range by each Range.min
     * @return Option[Range]
     */
-  def sorted : Seq[Range] = vals.toSeq.sortWith(_.start < _.start)
+  override def sorted : Seq[Range] = vals.toSeq.sortWith(_.start < _.start)
 
   /**
     * Append a Range
     * @param value Range
     */
-  def update(value:Range) : Unit = {
+  override def update(value:Range) : Unit = {
     vals += value
   }
 

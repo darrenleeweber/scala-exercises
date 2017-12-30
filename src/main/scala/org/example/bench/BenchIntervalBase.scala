@@ -1,22 +1,15 @@
 package org.example.bench
 
-import org.example.scala.Ranges
-
 import java.util.concurrent.TimeUnit
 
+import org.example.scala.{Interval, IntervalCollection}
 import org.openjdk.jmh.annotations._
 import org.openjdk.jmh.infra.Blackhole
 
 @BenchmarkMode(Array(Mode.Throughput)) @OutputTimeUnit(TimeUnit.MILLISECONDS)
-class BenchRanges {
+abstract class BenchIntervalBase {
 
-  def intervals(randomIntervals: Array[(Int,Int)]): Ranges = {
-    val intervals = Ranges()
-    for(i <- randomIntervals) {
-      intervals.update(Range(i._1, i._2))
-    }
-    intervals
-  }
+  def intervals(randomIntervals: Array[(Int,Int)]): IntervalCollection[Interval]
 
   @Benchmark
   def skipped100(state: IntervalsState100, blackhole: Blackhole) : Unit = {
@@ -43,4 +36,5 @@ class BenchRanges {
     val skipped = intervals(state.randomIntervals).skipped.size
     blackhole.consume(skipped)
   }
+
 }

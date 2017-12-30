@@ -2,6 +2,16 @@ package org.example.scala
 
 class IntervalSpecs extends SpecHelper {
 
+
+  describe("Interval.constructor with Tuple2") {
+    describe("with (1, 2)") {
+      it("contains 1 is true") {
+        val interval = new Interval((1, 2))
+        assert(interval.contains(1))
+      }
+    }
+  }
+
   describe("Interval.contains") {
     describe("with (1, 2)") {
       it("contains 1 is true") {

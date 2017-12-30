@@ -23,7 +23,7 @@ object IntervalSkips {
     for (line <- source.getLines) {
       intervals.update(parseInterval(line))
     }
-    val result = intervals.skipped.mkString("skipped ranges:\n", "\n" ,"\n")
+    val result = intervals.skipped.mkString("skipped intervals:\n", "\n" ,"\n")
     println(result) // scalastyle:ignore
   }
 
