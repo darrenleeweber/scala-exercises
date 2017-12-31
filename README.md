@@ -40,5 +40,8 @@ sbt "testOnly org.example.bench.*"
 To view a benchmark report, open the HTML file from
 - `target/benchmarks/report/index.html`
 
+A version of the benchmarks is on github.io at:
+- https://darrenleeweber.github.io/scala-exercises/
+
 Benchmark references:
 - http://scalameter.github.io/
