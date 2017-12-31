@@ -97,35 +97,19 @@ org.example.scala.Intervals.sorted(Intervals.scala:18)
 
 ### Benchmarks
 
+```
+sbt "testOnly org.example.bench.BenchmarkIntervals"
+```
+
 Example benchmarks use random arrays of integer inputs.  The `n` is the number
 of intervals (not  the entire range of real integers covered by all the intervals).
-The initial append operation is constant time for each of the n intervals in the
+The initial append operation is constant time for each of the `n` intervals in the
 `Intervals` and `Ranges`, so that's `O(n)` append ops.  The `IntervalTree` is a
 red-black binary tree that should be `O(log-n)` time for appends, which also sort
-the intervals.  The `Intervals` and `Ranges` need to be sorted, which is whatever
-java `Array.sort` does (in java-8); the `IntervalTree` should be sorted as it is
+the intervals.  The `IntervalTree` should have a more efficient sort process than
+the `Intervals` and `Ranges`. The `Intervals` and `Ranges` need to be sorted, which
+is a java `Array.sort` (java-8, scala 2.12) ; the `IntervalTree` is sorted while it is
 built, so the sort operation is just mapping the data into an `Interval` to satisfy
 the public API of the class.  The final pair-wise skip comparisons are a little
-less than `O(n)`.  The `IntervalTree` should have a more efficient
-update and sort process than the `Intervals` and `Ranges`.
+less than `O(n)`. 
 
-```
-[info] Benchmark                      Mode  Cnt   Score   Error   Units
-[info] BenchIntervalTree.skipped100  thrpt   20  18.639 ± 0.395  ops/ms
-[info] BenchIntervalTree.skipped300  thrpt   20   7.230 ± 0.253  ops/ms
-[info] BenchIntervalTree.skipped500  thrpt   20   4.564 ± 0.173  ops/ms
-[info] BenchIntervalTree.skipped700  thrpt   20   3.339 ± 0.094  ops/ms
-[info] BenchIntervalTree.skipped900  thrpt   20   2.813 ± 0.088  ops/ms
-
-[info] BenchIntervals.skipped100     thrpt   20  17.343 ± 0.668  ops/ms
-[info] BenchIntervals.skipped300     thrpt   20   5.672 ± 0.895  ops/ms
-[info] BenchIntervals.skipped500     thrpt   20   3.566 ± 0.265  ops/ms
-[info] BenchIntervals.skipped700     thrpt   20   2.315 ± 0.292  ops/ms
-[info] BenchIntervals.skipped900     thrpt   20   1.678 ± 0.090  ops/ms
-
-[info] BenchRanges.skipped100        thrpt   20  15.690 ± 0.977  ops/ms
-[info] BenchRanges.skipped300        thrpt   20   6.238 ± 0.216  ops/ms
-[info] BenchRanges.skipped500        thrpt   20   3.123 ± 0.114  ops/ms
-[info] BenchRanges.skipped700        thrpt   20   2.398 ± 0.070  ops/ms
-[info] BenchRanges.skipped900        thrpt   20   1.994 ± 0.046  ops/ms
-```
