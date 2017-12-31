@@ -3,7 +3,7 @@ package org.example.bench
 import org.scalameter.api._
 import org.example.scala.{Interval, IntervalTree, Intervals, Ranges}
 
-object Benchmarks extends Bench.OfflineReport {
+class BenchmarkIntervals extends Bench.OfflineReport {
 
   /* inputs */
 
