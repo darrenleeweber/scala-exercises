@@ -21,16 +21,24 @@ sbt test
 
 - [Intervals](docs/intervals.md)
 
+## Specs
+
+To run specs in sbt:
+
+```
+testOnly org.example.scala.*
+```
 
 ## Benchmarks
 
 To run benchmarks in sbt:
 
 ```
-jmh:clean
-jmh:run -i 20 -wi 10 -f1 -t1
+testOnly org.example.bench.*
 ```
 
+To view a benchmark report, open the HTML file from
+- `target/benchmarks/report/index.html`
+
 Benchmark references:
-- http://tutorials.jenkov.com/java-performance/jmh.html
-- https://github.com/ktoso/sbt-jmh
+- http://scalameter.github.io/
