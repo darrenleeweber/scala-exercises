@@ -26,7 +26,7 @@ sbt test
 To run specs in sbt:
 
 ```
-testOnly org.example.scala.*
+sbt "testOnly org.example.scala.*"
 ```
 
 ## Benchmarks
@@ -34,7 +34,7 @@ testOnly org.example.scala.*
 To run benchmarks in sbt:
 
 ```
-testOnly org.example.bench.*
+sbt "testOnly org.example.bench.*"
 ```
 
 To view a benchmark report, open the HTML file from
