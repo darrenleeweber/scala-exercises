@@ -11,7 +11,8 @@ scala:
   - 2.12.4
 
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION clean coverage test coverageReport
+  - sbt ++$TRAVIS_SCALA_VERSION clean coverage "testOnly org.example.scala.*" coverageReport
+
 after_success:
   - sbt coveralls
 
