@@ -27,7 +27,7 @@ object BenchIntervalTree extends Bench.OfflineReport {
 
   /* tests */
 
-  performance of "Intervals" in {
+  performance of "IntervalTree" in {
     measure method "update" in {
       using(randomIntervals) in {
         randomInterval => {
