@@ -19,6 +19,7 @@ sbt test
 
 ## Exercises
 
+- [Arrays](docs/arrays.md)
 - [Intervals](docs/intervals.md)
 
 ## Specs
