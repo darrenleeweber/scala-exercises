@@ -1,5 +1,5 @@
 package org.example.scala
 
-import org.scalatest.FunSpec
+import org.scalatest.{BeforeAndAfter, FunSpec}
 
-abstract class SpecHelper extends FunSpec
+abstract class SpecHelper extends FunSpec with BeforeAndAfter

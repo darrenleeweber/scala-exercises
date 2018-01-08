@@ -1,0 +1,28 @@
+package org.example.bench
+
+import org.example.scala.Factorial
+import org.scalameter.api._
+
+class BenchmarkFactorials extends Bench.OfflineReport {
+
+  val gen: Gen[Int] = Gen.range("N")(1, 1000, 100) // scalastyle:ignore
+
+  performance of "Factorial" in {
+    measure method "loop" in {
+      using(gen) in {
+        n => Factorial.loop(n)
+      }
+    }
+    measure method "recursive" in {
+      using(gen) in {
+        n => Factorial.recursive(n)
+      }
+    }
+    measure method "recursiveTail" in {
+      using(gen) in {
+        n => Factorial.recursiveTail(n)
+      }
+    }
+  }
+
+}
